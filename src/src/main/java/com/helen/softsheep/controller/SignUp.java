@@ -34,7 +34,6 @@ public class SignUp {
 			_user.setEmail(_email);
 			_user.setSex(_sex);
 			_user.setUserUuid(uuid);
-			System.out.println("uuid===" + uuid);
 			UserDao.saveUser(_user);
 			return "注册成功";
 		}  else {
