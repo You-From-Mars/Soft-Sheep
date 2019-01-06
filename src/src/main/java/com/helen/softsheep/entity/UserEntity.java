@@ -1,4 +1,4 @@
-package com.softsheep.entity;
+package com.helen.softsheep.entity;
 
 import java.io.Serializable;
 import org.springframework.data.annotation.Id;
@@ -11,6 +11,7 @@ public class UserEntity implements Serializable {
 	private String email;
 	private String username;
 	private int sex;  // 0: 男生，1: 女生
+	private String password;
 	public String getUserUuid() {
 		return userUuid;
 	}
@@ -34,5 +35,11 @@ public class UserEntity implements Serializable {
 	}
 	public void setSex(int sex) {
 		this.sex = sex;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
 	}
 }

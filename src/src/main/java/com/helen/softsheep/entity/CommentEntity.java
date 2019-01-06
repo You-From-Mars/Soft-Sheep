@@ -1,4 +1,4 @@
-package com.softsheep.entity;
+package com.helen.softsheep.entity;
 
 import java.io.Serializable;
 
