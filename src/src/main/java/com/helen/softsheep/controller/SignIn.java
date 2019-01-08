@@ -28,8 +28,7 @@ public class SignIn {
 			HttpSession session = req.getSession();
 			session.setAttribute("email", _email);
 			session.setAttribute("userUuid", user.getUserUuid());
-			System.out.println("email-----" + session.getAttribute("email"));
-			System.out.println("userUuid-----" + session.getAttribute("userUuid"));
+			session.setAttribute("userName", user.getUsername());
 			String sessionId = session.getId();
 			if (session.isNew()) {
 				System.out.println("session创建成功，session的id是：" + sessionId);

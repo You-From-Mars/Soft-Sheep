@@ -1,9 +1,11 @@
 package com.helen.softsheep.dao;
+import java.util.List;
+
 import com.helen.softsheep.entity.CommentEntity;
 
 public interface CommentDao {
-	void saveComment(CommentEntity comment);
-	CommentEntity findCommentById(String id);
-	void updateComment(CommentEntity comment);
+	void save(CommentEntity comment);
+	List findCommentsById(String articleId);
+//	void updateComment(CommentEntity comment);
 	void deleteCommentById(String id);
 }

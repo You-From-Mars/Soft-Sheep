@@ -28,7 +28,7 @@ import com.helen.softsheep.entity.ArticleEntity;
 public class CreateArticle {
 	@Autowired
 	private ArticleDao ArticleDao;
-	@RequestMapping(value = "/softsheep/create_article")
+	@RequestMapping(value = "/softsheep/article")
 	@ResponseBody
 	public String index(HttpServletRequest req, @RequestBody Map<String, Object> params) throws Exception {
 		HttpSession session = req.getSession();
@@ -37,7 +37,6 @@ public class CreateArticle {
 		String content = (String) params.get("content");
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String createdTime = sdf.format(new Date());
-		System.out.println("createdTime======" + createdTime);
 		int pageView = 0;
 		String articleUuid = UUID.randomUUID().toString().replaceAll("-", "");
 		ArticleEntity _article = new ArticleEntity();

@@ -1,6 +1,7 @@
 package com.helen.softsheep.dao;
 
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 import javax.annotation.Resource;
 
@@ -34,6 +35,17 @@ public class ArticleDaoImpl implements ArticleDao {
 		Query query = new Query(Criteria.where("articleUuid").is(id));
 		ArticleEntity article = mongoTemplate.findOne(query, ArticleEntity.class);
 		return article;
+	}
+	/**
+     * 根据userid查询对象
+     * @param userUuid
+     * @return
+     */
+	@Override
+	public List findArticlesByUserId(String id) {
+		Query query = new Query(Criteria.where("userUuid").is(id));
+		List articles = mongoTemplate.find(query, ArticleEntity.class);
+		return articles;
 	}
 	/**
      * 更新文章 
