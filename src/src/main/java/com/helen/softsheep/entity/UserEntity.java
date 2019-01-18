@@ -10,7 +10,7 @@ public class UserEntity implements Serializable {
 	private String userUuid;
 	private String email;
 	private String username;
-	private int sex;  // 0: 男生，1: 女生
+	private String sex;  // 0: 男生，1: 女生
 	private String password;
 	public String getUserUuid() {
 		return userUuid;
@@ -30,10 +30,10 @@ public class UserEntity implements Serializable {
 	public void setUsername(String username) {
 		this.username = username;
 	}
-	public int getSex() {
+	public String getSex() {
 		return sex;
 	}
-	public void setSex(int sex) {
+	public void setSex(String sex) {
 		this.sex = sex;
 	}
 	public String getPassword() {

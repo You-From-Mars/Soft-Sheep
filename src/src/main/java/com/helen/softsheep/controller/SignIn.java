@@ -20,7 +20,7 @@ public class SignIn {
 	private UserDao UserDao;
 	@RequestMapping(value = "/softsheep/signin")
 	@ResponseBody
-	public UserEntity index(HttpServletRequest req, @RequestBody Map<String, Object> params) throws Exception {
+	public String index(HttpServletRequest req, @RequestBody Map<String, Object> params) throws Exception {
 		String _email = (String) params.get("email");
 		String _password = (String) params.get("password");
 		UserEntity user = UserDao.findUserByEmail(_email);
@@ -35,7 +35,7 @@ public class SignIn {
 			}else {
 				System.out.println("服务器已经存在该session了，session的id是："+ sessionId);
 			}
-			return user;
+			return "登录成功";
 		} else {
 			throw new RuntimeException("User or password is not correct.");
 		}

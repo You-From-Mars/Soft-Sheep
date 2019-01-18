@@ -17,6 +17,12 @@ import com.helen.softsheep.entity.UserEntity;
 public class ArticleDaoImpl implements ArticleDao {
 	@Resource
 	private MongoTemplate mongoTemplate;
+	@Override
+	public List<ArticleEntity> getArticles() {
+		Query query = new Query();
+		List<ArticleEntity> articles = mongoTemplate.find(query, ArticleEntity.class);
+		return articles;
+	}
 	/**
      * 保存文章
      * @param ArticleEntity

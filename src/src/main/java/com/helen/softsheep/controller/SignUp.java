@@ -26,7 +26,7 @@ public class SignUp {
 		if (user == null) {
 			String _username = (String) params.get("username");
 			String _password = (String) params.get("password");
-			int _sex = (int) params.get("sex");
+			String _sex = (String) params.get("sex");
 			String uuid = UUID.randomUUID().toString().replaceAll("-", "");
 			UserEntity _user = new UserEntity();
 			_user.setUsername(_username);
