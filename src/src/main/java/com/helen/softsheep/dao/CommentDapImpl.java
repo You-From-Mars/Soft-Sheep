@@ -23,7 +23,7 @@ public class CommentDapImpl implements CommentDao {
 		mongoTemplate.save(comment);
 	}
 	@Override
-	public List findCommentsById(String articleId) {
+	public List<CommentEntity> findCommentsById(String articleId) {
 		Query query=new Query(Criteria.where("articleUuid").is(articleId));
 		return mongoTemplate.find(query, CommentEntity.class);
 	}
