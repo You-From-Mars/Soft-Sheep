@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.helen.softsheep.dao.ArticleDao;
 import com.helen.softsheep.entity.ArticleEntity;
+import com.helen.softsheep.response.ArticleBody;
 
 @RestController
 public class Articlelist {
@@ -20,7 +21,9 @@ public class Articlelist {
 	private ArticleDao ArticleDao;
 	@RequestMapping(value = "/softsheep/articlelist")
 	@ResponseBody
-	public List<ArticleEntity> index() throws Exception {
-		return ArticleDao.getArticles();
+	public ArticleBody index(HttpServletRequest req) throws Exception {
+		int pageNum = Integer.parseInt(req.getParameter("pageNum"));
+		int pageSize = Integer.parseInt(req.getParameter("pageSize"));
+		return ArticleDao.getArticles(pageNum, pageSize);
 	}
 }

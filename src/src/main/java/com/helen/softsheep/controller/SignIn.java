@@ -13,8 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.helen.softsheep.dao.UserDao;
 import com.helen.softsheep.entity.UserEntity;
-
-import response.UserBody;
+import com.helen.softsheep.response.UserBody;
 
 @RestController
 public class SignIn {

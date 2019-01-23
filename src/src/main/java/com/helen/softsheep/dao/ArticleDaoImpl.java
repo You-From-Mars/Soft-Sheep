@@ -1,6 +1,5 @@
 package com.helen.softsheep.dao;
 
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -12,16 +11,25 @@ import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Component;
 
 import com.helen.softsheep.entity.ArticleEntity;
-import com.helen.softsheep.entity.UserEntity;
+import com.helen.softsheep.response.ArticleBody;
 @Component
 public class ArticleDaoImpl implements ArticleDao {
 	@Resource
 	private MongoTemplate mongoTemplate;
 	@Override
-	public List<ArticleEntity> getArticles() {
+	public ArticleBody getArticles(int pageNum, int pageSize) {
 		Query query = new Query();
+		int skip = (pageNum - 1) * pageSize;
+		query.skip(skip);
+		query.limit(pageSize);
 		List<ArticleEntity> articles = mongoTemplate.find(query, ArticleEntity.class);
-		return articles;
+		ArticleBody _articles = new ArticleBody();
+		_articles.pageSize = pageSize;
+		_articles.pageNo = pageNum;
+		_articles.totleRecords = this.getArticleCount(new Query());
+		_articles.totlePage = (int) Math.ceil(_articles.totleRecords / pageSize);
+		_articles.articles = articles;
+		return _articles;
 	}
 	/**
      * 保存文章
@@ -76,5 +84,10 @@ public class ArticleDaoImpl implements ArticleDao {
 	public void deleteArticleById(String id) {
 		Query query=new Query(Criteria.where("articleUuid").is(id));
 		mongoTemplate.remove(query,ArticleEntity.class);
+	}
+	@Override
+	public Long getArticleCount(Query query) {
+		long count= mongoTemplate.count(query, ArticleEntity.class);
+		return count;
 	}
 }

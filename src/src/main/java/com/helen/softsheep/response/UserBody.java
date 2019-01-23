@@ -1,4 +1,4 @@
-package response;
+package com.helen.softsheep.response;
 
 public class UserBody {
 	public String email;
