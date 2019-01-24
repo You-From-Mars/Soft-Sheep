@@ -26,8 +26,11 @@ public class ArticleDaoImpl implements ArticleDao {
 		ArticleBody _articles = new ArticleBody();
 		_articles.pageSize = pageSize;
 		_articles.pageNo = pageNum;
-		_articles.totleRecords = this.getArticleCount(new Query());
-		_articles.totlePage = (int) Math.ceil(_articles.totleRecords / pageSize);
+		_articles.totalRecords = this.getArticleCount(new Query());
+		_articles.totalPage = Math.ceil(_articles.totalRecords / pageSize);
+		System.out.println("pageSize-----" + _articles.pageSize);
+		System.out.println("totleRecords-----" + _articles.totalRecords);
+		System.out.println("totalPage-----" + _articles.totalPage);
 		_articles.articles = articles;
 		return _articles;
 	}

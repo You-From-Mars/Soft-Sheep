@@ -5,9 +5,9 @@ import java.util.List;
 import com.helen.softsheep.entity.ArticleEntity;
 
 public class ArticleBody {
-	public int pageSize;
+	public double pageSize;
 	public int pageNo;
-	public Long totleRecords;
-	public int totlePage;
+	public double totalRecords;
+	public double totalPage;
 	public List<ArticleEntity> articles;
 }
