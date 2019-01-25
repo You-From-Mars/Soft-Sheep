@@ -8,6 +8,8 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +23,9 @@ import com.helen.softsheep.entity.OverviewEntity;
 
 @RestController
 public class CreateArticle {
+	
+	public Logger logger = LoggerFactory.getLogger(this.getClass());
+
 	@Autowired
 	private ArticleDao ArticleDao;
 	@Autowired
@@ -36,7 +41,7 @@ public class CreateArticle {
 		String REGEX = "#*=*\\**`*\\+*>*-*\\[*\\]*\\s*\\(*\\)*(toc)*@*";
 		String REPLACE = "";
 		String overviewContent = content.replaceAll(REGEX, REPLACE).substring(0, 50);
-		System.out.println("overviewContent" + overviewContent);
+		logger.info("overviewContent" + overviewContent);
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String createdTime = sdf.format(new Date());
 		int pageView = 0;

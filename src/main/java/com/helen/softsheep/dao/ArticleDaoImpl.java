@@ -1,7 +1,5 @@
 package com.helen.softsheep.dao;
 
-import java.util.List;
-
 import javax.annotation.Resource;
 
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -11,7 +9,6 @@ import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Component;
 
 import com.helen.softsheep.entity.ArticleEntity;
-import com.helen.softsheep.response.OverviewBody;
 @Component
 public class ArticleDaoImpl implements ArticleDao {
 	@Resource

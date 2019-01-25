@@ -5,6 +5,8 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,8 +19,11 @@ import com.helen.softsheep.response.UserBody;
 
 @RestController
 public class SignIn {
+
+	public Logger logger = LoggerFactory.getLogger(this.getClass());
 	@Autowired
 	private UserDao UserDao;
+
 	@RequestMapping(value = "/softsheep/signin")
 	@ResponseBody
 	public UserBody index(HttpServletRequest req, @RequestBody Map<String, Object> params) throws Exception {
@@ -32,9 +37,9 @@ public class SignIn {
 			session.setAttribute("userName", user.getUsername());
 			String sessionId = session.getId();
 			if (session.isNew()) {
-				System.out.println("session创建成功，session的id是：" + sessionId);
-			}else {
-				System.out.println("服务器已经存在该session了，session的id是："+ sessionId);
+				logger.info("session创建成功，session的id是：" + sessionId);
+			} else {
+				logger.info("服务器已经存在该session了，session的id是：" + sessionId);
 			}
 			UserBody User = new UserBody();
 			User.email = _email;
@@ -45,5 +50,3 @@ public class SignIn {
 		}
 	}
 }
-
-
