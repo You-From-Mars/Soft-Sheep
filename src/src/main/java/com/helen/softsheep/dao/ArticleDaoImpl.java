@@ -11,29 +11,26 @@ import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Component;
 
 import com.helen.softsheep.entity.ArticleEntity;
-import com.helen.softsheep.response.ArticleBody;
+import com.helen.softsheep.response.OverviewBody;
 @Component
 public class ArticleDaoImpl implements ArticleDao {
 	@Resource
 	private MongoTemplate mongoTemplate;
-	@Override
-	public ArticleBody getArticles(int pageNum, int pageSize) {
-		Query query = new Query();
-		int skip = (pageNum - 1) * pageSize;
-		query.skip(skip);
-		query.limit(pageSize);
-		List<ArticleEntity> articles = mongoTemplate.find(query, ArticleEntity.class);
-		ArticleBody _articles = new ArticleBody();
-		_articles.pageSize = pageSize;
-		_articles.pageNo = pageNum;
-		_articles.totalRecords = this.getArticleCount(new Query());
-		_articles.totalPage = Math.ceil(_articles.totalRecords / pageSize);
-		System.out.println("pageSize-----" + _articles.pageSize);
-		System.out.println("totleRecords-----" + _articles.totalRecords);
-		System.out.println("totalPage-----" + _articles.totalPage);
-		_articles.articles = articles;
-		return _articles;
-	}
+//	@Override
+//	public OverviewBody getArticles(int pageNum, int pageSize) {
+//		Query query = new Query();
+//		int skip = (pageNum - 1) * pageSize;
+//		query.skip(skip);
+//		query.limit(pageSize);
+//		List<ArticleEntity> articles = mongoTemplate.find(query, ArticleEntity.class);
+//		OverviewBody _articles = new OverviewBody();
+//		_articles.pageSize = pageSize;
+//		_articles.pageNo = pageNum;
+//		_articles.totalRecords = this.getArticleCount(new Query());
+//		_articles.totalPage = Math.ceil(_articles.totalRecords / pageSize);
+//		_articles.articles = articles;
+//		return _articles;
+//	}
 	/**
      * 保存文章
      * @param ArticleEntity
@@ -58,12 +55,12 @@ public class ArticleDaoImpl implements ArticleDao {
      * @param userUuid
      * @return
      */
-	@Override
-	public List findArticlesByUserId(String id) {
-		Query query = new Query(Criteria.where("userUuid").is(id));
-		List articles = mongoTemplate.find(query, ArticleEntity.class);
-		return articles;
-	}
+//	@Override
+//	public List findArticlesByUserId(String id) {
+//		Query query = new Query(Criteria.where("userUuid").is(id));
+//		List articles = mongoTemplate.find(query, ArticleEntity.class);
+//		return articles;
+//	}
 	/**
      * 更新文章 
      * @param id
@@ -88,9 +85,9 @@ public class ArticleDaoImpl implements ArticleDao {
 		Query query=new Query(Criteria.where("articleUuid").is(id));
 		mongoTemplate.remove(query,ArticleEntity.class);
 	}
-	@Override
-	public Long getArticleCount(Query query) {
-		long count= mongoTemplate.count(query, ArticleEntity.class);
-		return count;
-	}
+//	@Override
+//	public Long getArticleCount(Query query) {
+//		long count= mongoTemplate.count(query, ArticleEntity.class);
+//		return count;
+//	}
 }

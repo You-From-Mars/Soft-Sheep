@@ -11,17 +11,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.helen.softsheep.dao.ArticleDao;
+import com.helen.softsheep.dao.OverviewDao;
 
 @RestController
 public class PersonalArticleList {
 	@Autowired
-	private ArticleDao ArticleDao;
+	private OverviewDao overviewDao;
 	@RequestMapping(value = "/softsheep/personal_articles")
 	@ResponseBody
 	public List index(HttpServletRequest req,HttpServletResponse res) throws Exception {
 		HttpSession session = req.getSession();
 		String userId = (String)session.getAttribute("userUuid");
-		return ArticleDao.findArticlesByUserId(userId);
+		return overviewDao.findOverviewsByUserId(userId);
 	}
 }

@@ -2,12 +2,12 @@ package com.helen.softsheep.response;
 
 import java.util.List;
 
-import com.helen.softsheep.entity.ArticleEntity;
+import com.helen.softsheep.entity.OverviewEntity;
 
-public class ArticleBody {
+public class OverviewBody {
 	public double pageSize;
 	public int pageNo;
 	public double totalRecords;
 	public double totalPage;
-	public List<ArticleEntity> articles;
+	public List<OverviewEntity> overviews;
 }

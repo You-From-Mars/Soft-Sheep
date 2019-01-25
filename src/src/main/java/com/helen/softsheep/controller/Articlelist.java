@@ -11,19 +11,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.helen.softsheep.dao.ArticleDao;
-import com.helen.softsheep.entity.ArticleEntity;
-import com.helen.softsheep.response.ArticleBody;
+import com.helen.softsheep.dao.OverviewDao;
+import com.helen.softsheep.entity.OverviewEntity;
+import com.helen.softsheep.response.OverviewBody;
 
 @RestController
 public class Articlelist {
 	@Autowired
-	private ArticleDao ArticleDao;
+	private OverviewDao OverviewDao;
 	@RequestMapping(value = "/softsheep/articlelist")
 	@ResponseBody
-	public ArticleBody index(HttpServletRequest req) throws Exception {
+	public OverviewBody index(HttpServletRequest req) throws Exception {
 		int pageNum = Integer.parseInt(req.getParameter("pageNum"));
 		int pageSize = Integer.parseInt(req.getParameter("pageSize"));
-		return ArticleDao.getArticles(pageNum, pageSize);
+		return OverviewDao.findOverviews(pageNum, pageSize);
 	}
 }
