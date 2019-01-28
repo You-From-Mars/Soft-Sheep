@@ -2,6 +2,7 @@ package com.helen.softsheep.controller;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,8 +19,15 @@ public class ArticleDetail {
 	@RequestMapping(value = "/softsheep/article_detail")
 	@ResponseBody
 	public ArticleEntity index(HttpServletRequest req,HttpServletResponse res) throws Exception {
+		HttpSession session = req.getSession();
+		String _userUuid = (String)session.getAttribute("userUuid");
 		String articleId = req.getParameter("articleId");
 		ArticleEntity article = ArticleDao.findArticleById(articleId);
+		if (_userUuid.equals(article.getUserUuid())) {
+			article.setIsSelf(1);
+		} else {
+			article.setIsSelf(0);
+		}
 //		更新浏览量
 		int pageView = article.getPageView();
 		pageView++;

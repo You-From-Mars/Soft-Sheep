@@ -40,7 +40,12 @@ public class CreateArticle {
 		String content = (String) params.get("content");
 		String REGEX = "#*=*\\**`*\\+*>*-*\\[*\\]*\\s*\\(*\\)*(toc)*@*";
 		String REPLACE = "";
-		String overviewContent = content.replaceAll(REGEX, REPLACE).substring(0, 50);
+		String overviewContent = "";
+		if (content.length() > 50) {
+			overviewContent = content.replaceAll(REGEX, REPLACE).substring(0, 50);
+		} else {
+			overviewContent = content.replaceAll(REGEX, REPLACE);
+		}
 		logger.info("overviewContent" + overviewContent);
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String createdTime = sdf.format(new Date());

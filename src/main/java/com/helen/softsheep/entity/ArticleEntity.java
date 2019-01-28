@@ -15,6 +15,7 @@ public class ArticleEntity implements Serializable {
 	private String userUuid;
 	private String createdTime;
 	private int pageView;
+	private int isSelf; // 1: 是自己, 0: 不是自己
 	public String getArticleUuid() {
 		return articleUuid;
 	}
@@ -50,5 +51,11 @@ public class ArticleEntity implements Serializable {
 	}
 	public void setPageView(int pageView) {
 		this.pageView = pageView;
+	}
+	public int getIsSelf() {
+		return isSelf;
+	}
+	public void setIsSelf(int isSelf) {
+		this.isSelf = isSelf;
 	}
 }
