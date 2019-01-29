@@ -1,13 +1,15 @@
 package com.helen.softsheep.entity;
 
 import java.io.Serializable;
-import java.util.Date;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "overviews")
 public class OverviewEntity implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	private String overviewUuid;
 	private String userUuid;

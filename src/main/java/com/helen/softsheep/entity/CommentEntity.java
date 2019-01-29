@@ -7,6 +7,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "comments")
 public class CommentEntity implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	private String commentUuid;
 	private String articleUuid;

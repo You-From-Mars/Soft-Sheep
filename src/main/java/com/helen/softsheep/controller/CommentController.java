@@ -2,10 +2,12 @@ package com.helen.softsheep.controller;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +21,18 @@ import com.helen.softsheep.entity.CommentEntity;
 import com.helen.softsheep.result.GenericResult;
 
 @RestController
-public class CreateComment {
+public class CommentController {
+	
 	@Autowired
-	private CommentDao CommentDao;
+	private CommentDao commentDao;	
+	
+	@RequestMapping(value = "/softsheep/commentlist")
+	@ResponseBody
+	public GenericResult<List<CommentEntity>> commentsByArticleId(HttpServletRequest req,HttpServletResponse res) throws Exception {
+		String articleId = req.getParameter("articleId");
+		return GenericResult.success(commentDao.findCommentsById(articleId));
+	}
+	
 	@RequestMapping(value = "/softsheep/comment")
 	@ResponseBody
 	public GenericResult<String> index(HttpServletRequest req, @RequestBody Map<String, Object> params) throws Exception {
@@ -38,7 +49,8 @@ public class CreateComment {
 		comment.setCommentUuid(commentUuid);
 		comment.setCreatedTime(createdTime);
 		comment.setUserName(userName);
-		CommentDao.save(comment);
+		commentDao.save(comment);
 		return GenericResult.success("保存成功");
 	}
 }
+

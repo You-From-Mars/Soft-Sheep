@@ -6,6 +6,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "users")
 public class UserEntity implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	private String userUuid;
 	private String email;

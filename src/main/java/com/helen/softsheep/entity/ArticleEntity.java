@@ -1,13 +1,15 @@
 package com.helen.softsheep.entity;
 
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "articles")
 public class ArticleEntity implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
+	
 	@Id
 	private String articleUuid;
 	private String title;

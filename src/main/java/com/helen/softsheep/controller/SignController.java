@@ -1,8 +1,11 @@
 package com.helen.softsheep.controller;
 
 import java.util.Map;
+import java.util.UUID;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -20,7 +23,7 @@ import com.helen.softsheep.result.CommonCode;
 import com.helen.softsheep.result.GenericResult;
 
 @RestController
-public class SignIn {
+public class SignController {
 
 	public Logger logger = LoggerFactory.getLogger(this.getClass());
 	@Autowired
@@ -28,7 +31,7 @@ public class SignIn {
 
 	@RequestMapping(value = "/softsheep/signin")
 	@ResponseBody
-	public GenericResult<UserBody> index(HttpServletRequest req, @RequestBody Map<String, Object> params)
+	public GenericResult<UserBody> signIn(HttpServletRequest req, @RequestBody Map<String, Object> params)
 			throws Exception {
 		String _email = (String) params.get("email");
 		String _password = (String) params.get("password");
@@ -50,6 +53,47 @@ public class SignIn {
 			return GenericResult.success(User);
 		} else {
 			return GenericResult.fail(CommonCode.CODE_NO_LOGIN);
+		}
+	}
+
+	@RequestMapping(value = "/softsheep/loginout")
+	@ResponseBody
+	public GenericResult<String> loginOut(HttpServletRequest req, HttpServletResponse res) throws Exception {
+		HttpSession session = req.getSession();
+		Cookie[] cookies = req.getCookies();
+		for (Cookie cookie : cookies) {
+			if (cookie.getName() == "JSESSIONID") {
+				cookie.setValue(null);
+				cookie.setMaxAge(0);
+				res.addCookie(cookie);
+				break;
+			}
+		}
+		session.invalidate();
+		return GenericResult.success("退出成功");
+	}
+
+	@RequestMapping(value = "/softsheep/signup")
+	@ResponseBody
+	public GenericResult<String> signUp(HttpServletRequest req, @RequestBody Map<String, Object> params)
+			throws Exception {
+		String _email = (String) params.get("email");
+		UserEntity user = UserDao.findUserByEmail(_email);
+		if (user == null) {
+			String _username = (String) params.get("username");
+			String _password = (String) params.get("password");
+			String _sex = (String) params.get("sex");
+			String uuid = UUID.randomUUID().toString().replaceAll("-", "");
+			UserEntity _user = new UserEntity();
+			_user.setUsername(_username);
+			_user.setPassword(_password);
+			_user.setEmail(_email);
+			_user.setSex(_sex);
+			_user.setUserUuid(uuid);
+			UserDao.saveUser(_user);
+			return GenericResult.success("注册成功");
+		} else {
+			return GenericResult.success("该账户已经存在");
 		}
 	}
 }
