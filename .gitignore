@@ -2,6 +2,7 @@ target/*
 *.iml
 .idea/*
 logs
+log
 /target/
 .settings
 .classpath

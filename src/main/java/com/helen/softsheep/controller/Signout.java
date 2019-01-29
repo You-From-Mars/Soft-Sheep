@@ -9,11 +9,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.helen.softsheep.result.GenericResult;
+
 @RestController
 public class Signout {
 	@RequestMapping(value = "/softsheep/loginout")
 	@ResponseBody
-	public String index(HttpServletRequest req, HttpServletResponse res) throws Exception {
+	public GenericResult<String> index(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		HttpSession session = req.getSession();
 		Cookie[] cookies = req.getCookies();
 		for (Cookie cookie: cookies) {
@@ -25,6 +27,6 @@ public class Signout {
 			}
 		}
 		session.invalidate();
-		return "退出成功";
+		return GenericResult.success("退出成功");
 	}
 }

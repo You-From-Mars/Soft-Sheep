@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.helen.softsheep.dao.CommentDao;
 import com.helen.softsheep.entity.CommentEntity;
+import com.helen.softsheep.result.GenericResult;
 
 @RestController
 public class CreateComment {
@@ -23,7 +24,7 @@ public class CreateComment {
 	private CommentDao CommentDao;
 	@RequestMapping(value = "/softsheep/comment")
 	@ResponseBody
-	public String index(HttpServletRequest req, @RequestBody Map<String, Object> params) throws Exception {
+	public GenericResult<String> index(HttpServletRequest req, @RequestBody Map<String, Object> params) throws Exception {
 		HttpSession session = req.getSession();
 		String commentUuid = UUID.randomUUID().toString().replaceAll("-", "");
 		String articleUuid = (String) params.get("articleId");
@@ -38,6 +39,6 @@ public class CreateComment {
 		comment.setCreatedTime(createdTime);
 		comment.setUserName(userName);
 		CommentDao.save(comment);
-		return "保存成功";
+		return GenericResult.success("保存成功");
 	}
 }

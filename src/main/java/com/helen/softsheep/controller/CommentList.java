@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.helen.softsheep.dao.CommentDao;
 import com.helen.softsheep.entity.CommentEntity;
+import com.helen.softsheep.result.GenericResult;
 
 @RestController
 public class CommentList {
@@ -19,9 +20,9 @@ public class CommentList {
 	private CommentDao CommentDao;
 	@RequestMapping(value = "/softsheep/commentlist")
 	@ResponseBody
-	public List<CommentEntity> index(HttpServletRequest req,HttpServletResponse res) throws Exception {
+	public GenericResult<List<CommentEntity>> index(HttpServletRequest req,HttpServletResponse res) throws Exception {
 		String articleId = req.getParameter("articleId");
-		return CommentDao.findCommentsById(articleId);
+		return GenericResult.success(CommentDao.findCommentsById(articleId));
 	}
 }
 

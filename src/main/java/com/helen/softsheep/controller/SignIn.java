@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.helen.softsheep.dao.UserDao;
 import com.helen.softsheep.entity.UserEntity;
 import com.helen.softsheep.response.UserBody;
+import com.helen.softsheep.result.CommonCode;
+import com.helen.softsheep.result.GenericResult;
 
 @RestController
 public class SignIn {
@@ -26,7 +28,8 @@ public class SignIn {
 
 	@RequestMapping(value = "/softsheep/signin")
 	@ResponseBody
-	public UserBody index(HttpServletRequest req, @RequestBody Map<String, Object> params) throws Exception {
+	public GenericResult<UserBody> index(HttpServletRequest req, @RequestBody Map<String, Object> params)
+			throws Exception {
 		String _email = (String) params.get("email");
 		String _password = (String) params.get("password");
 		UserEntity user = UserDao.findUserByEmail(_email);
@@ -44,9 +47,9 @@ public class SignIn {
 			UserBody User = new UserBody();
 			User.email = _email;
 			User.userName = UserDao.findUserByEmail(_email).getUsername();
-			return User;
+			return GenericResult.success(User);
 		} else {
-			throw new RuntimeException("User or password is not correct.");
+			return GenericResult.fail(CommonCode.CODE_NO_LOGIN);
 		}
 	}
 }

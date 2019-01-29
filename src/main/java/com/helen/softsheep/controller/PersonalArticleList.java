@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.helen.softsheep.dao.OverviewDao;
+import com.helen.softsheep.entity.OverviewEntity;
+import com.helen.softsheep.result.GenericResult;
 
 @RestController
 public class PersonalArticleList {
@@ -19,9 +21,9 @@ public class PersonalArticleList {
 	private OverviewDao overviewDao;
 	@RequestMapping(value = "/softsheep/personal_articles")
 	@ResponseBody
-	public List index(HttpServletRequest req,HttpServletResponse res) throws Exception {
+	public GenericResult<List<OverviewEntity>> index(HttpServletRequest req,HttpServletResponse res) throws Exception {
 		HttpSession session = req.getSession();
 		String userId = (String)session.getAttribute("userUuid");
-		return overviewDao.findOverviewsByUserId(userId);
+		return GenericResult.success(overviewDao.findOverviewsByUserId(userId));
 	}
 }

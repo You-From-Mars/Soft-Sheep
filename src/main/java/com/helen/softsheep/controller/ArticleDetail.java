@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.helen.softsheep.dao.ArticleDao;
 import com.helen.softsheep.entity.ArticleEntity;
+import com.helen.softsheep.result.GenericResult;
 
 @RestController
 public class ArticleDetail {
@@ -18,7 +19,7 @@ public class ArticleDetail {
 	private ArticleDao ArticleDao;
 	@RequestMapping(value = "/softsheep/article_detail")
 	@ResponseBody
-	public ArticleEntity index(HttpServletRequest req,HttpServletResponse res) throws Exception {
+	public GenericResult<ArticleEntity> index(HttpServletRequest req,HttpServletResponse res) throws Exception {
 		HttpSession session = req.getSession();
 		String _userUuid = (String)session.getAttribute("userUuid");
 		String articleId = req.getParameter("articleId");
@@ -34,6 +35,6 @@ public class ArticleDetail {
 		pageView++;
 		article.setPageView(pageView);
 		ArticleDao.saveArticle(article);
-		return article;
+		return GenericResult.success(article);
 	}
 }

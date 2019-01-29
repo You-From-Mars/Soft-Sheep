@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.helen.softsheep.dao.UserDao;
 import com.helen.softsheep.entity.UserEntity;
+import com.helen.softsheep.result.GenericResult;
 
 @RestController
 public class SignUp {
@@ -20,7 +21,7 @@ public class SignUp {
 	private UserDao UserDao;
 	@RequestMapping(value = "/softsheep/signup")
 	@ResponseBody
-	public String index(HttpServletRequest req, @RequestBody Map<String, Object> params) throws Exception {
+	public GenericResult<String> index(HttpServletRequest req, @RequestBody Map<String, Object> params) throws Exception {
 		String _email = (String) params.get("email");
 		UserEntity user = UserDao.findUserByEmail(_email);
 		if (user == null) {
@@ -35,9 +36,9 @@ public class SignUp {
 			_user.setSex(_sex);
 			_user.setUserUuid(uuid);
 			UserDao.saveUser(_user);
-			return "注册成功";
+			return GenericResult.success("注册成功");
 		}  else {
-			return "该账户已经存在";
+			return GenericResult.success("该账户已经存在");
 		}
 	}
 

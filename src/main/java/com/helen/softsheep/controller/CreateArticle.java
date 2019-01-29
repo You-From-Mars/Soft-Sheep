@@ -20,6 +20,7 @@ import com.helen.softsheep.dao.ArticleDao;
 import com.helen.softsheep.dao.OverviewDao;
 import com.helen.softsheep.entity.ArticleEntity;
 import com.helen.softsheep.entity.OverviewEntity;
+import com.helen.softsheep.result.GenericResult;
 
 @RestController
 public class CreateArticle {
@@ -32,7 +33,7 @@ public class CreateArticle {
 	private OverviewDao OverviewDao;
 	@RequestMapping(value = "/softsheep/article")
 	@ResponseBody
-	public String index(HttpServletRequest req, @RequestBody Map<String, Object> params) throws Exception {
+	public GenericResult<String> index(HttpServletRequest req, @RequestBody Map<String, Object> params) throws Exception {
 		HttpSession session = req.getSession();
 		String userUuid = (String)session.getAttribute("userUuid");
 		String title = (String) params.get("title");
@@ -92,6 +93,6 @@ public class CreateArticle {
 			OverviewDao.update(_overview);
 		}
 		
-		return "创建成功";
+		return GenericResult.success("创建成功");
 	}
 }
