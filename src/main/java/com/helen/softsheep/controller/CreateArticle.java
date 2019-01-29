@@ -38,30 +38,46 @@ public class CreateArticle {
 		String title = (String) params.get("title");
 		String author = (String)session.getAttribute("userName");
 		String content = (String) params.get("content");
+		String articleId = (String) params.get("id");
 		String REGEX = "#*=*\\**`*\\+*>*-*\\[*\\]*\\s*\\(*\\)*(toc)*@*";
 		String REPLACE = "";
 		String overviewContent = "";
 		if (content.length() > 50) {
-			overviewContent = content.replaceAll(REGEX, REPLACE).substring(0, 50);
+			overviewContent = content.replaceAll(REGEX, REPLACE).substring(0, 50) + "...";
 		} else {
 			overviewContent = content.replaceAll(REGEX, REPLACE);
 		}
 		logger.info("overviewContent" + overviewContent);
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String createdTime = sdf.format(new Date());
+		
 		int pageView = 0;
-		String articleUuid = UUID.randomUUID().toString().replaceAll("-", "");
-		ArticleEntity _article = new ArticleEntity();
+		ArticleEntity _article = null;
+		String articleUuid = "";
+		String overviewUuid = "";
+		OverviewEntity _overview = null;
+		
+		if (articleId.equals("")) {
+			articleUuid = UUID.randomUUID().toString().replaceAll("-", "");
+			_article = new ArticleEntity();
+		} else {
+			_article = ArticleDao.findArticleById(articleId);
+			articleUuid = articleId;
+		}
 		_article.setArticleUuid(articleUuid);
 		_article.setContent(content);
 		_article.setCreatedTime(createdTime);
 		_article.setPageView(pageView);
 		_article.setTitle(title);
 		_article.setUserUuid(userUuid);
-		ArticleDao.saveArticle(_article);
-		
-		String overviewUuid = UUID.randomUUID().toString().replaceAll("-", "");
-		OverviewEntity _overview = new OverviewEntity();
+		if (articleId.equals("")) {
+			ArticleDao.saveArticle(_article);
+			overviewUuid = UUID.randomUUID().toString().replaceAll("-", "");
+			_overview = new OverviewEntity();
+		} else {
+			ArticleDao.updateArticle(_article);
+			_overview = OverviewDao.findOverviewByArticleId(articleUuid);
+		}
 		_overview.setAuthor(author);
 		_overview.setCreatedTime(createdTime);
 		_overview.setOverviewContent(overviewContent);
@@ -70,7 +86,12 @@ public class CreateArticle {
 		_overview.setUserUuid(userUuid);
 		_overview.setArticleUuid(articleUuid);
 		_overview.setTitle(title);
-		OverviewDao.save(_overview);
+		if (articleId.equals("")) {
+			OverviewDao.save(_overview);
+		} else {
+			OverviewDao.update(_overview);
+		}
+		
 		return "创建成功";
 	}
 }

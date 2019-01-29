@@ -23,7 +23,8 @@ public class ArticleDetail {
 		String _userUuid = (String)session.getAttribute("userUuid");
 		String articleId = req.getParameter("articleId");
 		ArticleEntity article = ArticleDao.findArticleById(articleId);
-		if (_userUuid.equals(article.getUserUuid())) {
+		System.out.println("_userUuid=====" + _userUuid);
+		if (_userUuid != null && _userUuid.equals(article.getUserUuid())) {
 			article.setIsSelf(1);
 		} else {
 			article.setIsSelf(0);

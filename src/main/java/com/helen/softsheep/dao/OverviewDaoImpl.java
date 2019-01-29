@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Component;
 
 import com.helen.softsheep.entity.CommentEntity;
@@ -21,6 +22,17 @@ public class OverviewDaoImpl implements OverviewDao  {
 	@Override
 	public void save(OverviewEntity overview) {
 		mongoTemplate.save(overview);
+	}
+	
+	@Override 
+	public void update(OverviewEntity overview) {
+		Query query=new Query(Criteria.where("articleUuid").is(overview.getArticleUuid()));
+		Update update= new Update()
+						.set("overviewContent", overview.getOverviewContent())
+						.set("title", overview.getTitle())
+						.set("timer", overview.getTimer())
+						.set("createdTime", overview.getCreatedTime());
+		mongoTemplate.updateFirst(query, update, OverviewEntity.class);
 	}
 
 	@Override
@@ -37,6 +49,12 @@ public class OverviewDaoImpl implements OverviewDao  {
 		_overviews.totalPage = Math.ceil(_overviews.totalRecords / pageSize);
 		_overviews.overviews = overviews;
 		return _overviews;
+	}
+	
+	@Override
+	public OverviewEntity findOverviewByArticleId(String articleId) {
+		Query query = new Query(Criteria.where("articleUuid").is(articleId));
+		return mongoTemplate.findOne(query, OverviewEntity.class);
 	}
 	
 	@Override
