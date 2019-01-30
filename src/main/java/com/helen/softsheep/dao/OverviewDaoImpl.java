@@ -30,6 +30,7 @@ public class OverviewDaoImpl implements OverviewDao  {
 		Update update= new Update()
 						.set("overviewContent", overview.getOverviewContent())
 						.set("title", overview.getTitle())
+						.set("starCount", overview.getStarCount())
 						.set("timer", overview.getTimer())
 						.set("createdTime", overview.getCreatedTime())
 						.set("pageView", overview.getPageView());

@@ -11,12 +11,14 @@ public class ArticleEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
+	private String starId;
 	private String articleUuid;
 	private String title;
 	private String content;
 	private String userUuid;
 	private String createdTime;
 	private int pageView;
+	private int starCount;
 	private int isSelf; // 1: 是自己, 0: 不是自己
 	public String getArticleUuid() {
 		return articleUuid;
@@ -59,5 +61,11 @@ public class ArticleEntity implements Serializable {
 	}
 	public void setIsSelf(int isSelf) {
 		this.isSelf = isSelf;
+	}
+	public int getStarCount() {
+		return starCount;
+	}
+	public void setStarCount(int starCount) {
+		this.starCount = starCount;
 	}
 }

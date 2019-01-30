@@ -36,10 +36,9 @@ public class CommentController {
 	
 	@RequestMapping(value = "/softsheep/comment")
 	@ResponseBody
-	public GenericResult<String> index(HttpServletRequest req, @RequestBody Map<String, Object> params) throws Exception {
+	public GenericResult<CommonCode> index(HttpServletRequest req, @RequestBody Map<String, Object> params) throws Exception {
 		HttpSession session = req.getSession();
 		String userName = (String) session.getAttribute("userName");
-		System.out.println("userName----" + userName);
 		if (userName == null) {
 			return GenericResult.fail(CommonCode.CODE_NO_LOGIN);
 		}
@@ -55,7 +54,7 @@ public class CommentController {
 		comment.setCreatedTime(createdTime);
 		comment.setUserName(userName);
 		commentDao.save(comment);
-		return GenericResult.success("保存成功");
+		return GenericResult.success(CommonCode.CODE_SUCCESS);
 	}
 }
 

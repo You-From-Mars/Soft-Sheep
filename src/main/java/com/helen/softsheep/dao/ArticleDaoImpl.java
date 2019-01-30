@@ -69,6 +69,7 @@ public class ArticleDaoImpl implements ArticleDao {
 		Update update= new Update()
 				.set("title", article.getTitle())
 				.set("content", article.getContent())
+				.set("starCount", article.getStarCount())
 				.set("pageView", article.getPageView());
 		mongoTemplate.updateFirst(query,update,ArticleEntity.class);
 	}

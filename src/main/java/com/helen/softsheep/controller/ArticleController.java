@@ -102,6 +102,7 @@ public class ArticleController {
 		if (articleId.equals("")) {
 			articleUuid = UUID.randomUUID().toString().replaceAll("-", "");
 			_article = new ArticleEntity();
+			_article.setStarCount(0);
 		} else {
 			_article = articleDao.findArticleById(articleId);
 			articleUuid = articleId;
@@ -116,6 +117,7 @@ public class ArticleController {
 			articleDao.saveArticle(_article);
 			overviewUuid = UUID.randomUUID().toString().replaceAll("-", "");
 			_overview = new OverviewEntity();
+			_overview.setStarCount(0);
 		} else {
 			articleDao.updateArticle(_article);
 			_overview = overviewDao.findOverviewByArticleId(articleUuid);

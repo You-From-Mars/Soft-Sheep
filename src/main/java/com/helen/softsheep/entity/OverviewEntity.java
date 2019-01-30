@@ -19,6 +19,7 @@ public class OverviewEntity implements Serializable {
 	private String createdTime;
 	private String title;
 	private int pageView;
+	private int starCount;
 	private long timer;
 	public String getOverviewUuid() {
 		return overviewUuid;
@@ -73,5 +74,11 @@ public class OverviewEntity implements Serializable {
 	}
 	public void setPageView(int pageView) {
 		this.pageView = pageView;
+	}
+	public int getStarCount() {
+		return starCount;
+	}
+	public void setStarCount(int starCount) {
+		this.starCount = starCount;
 	}
 }
