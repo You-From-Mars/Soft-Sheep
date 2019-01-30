@@ -31,7 +31,8 @@ public class OverviewDaoImpl implements OverviewDao  {
 						.set("overviewContent", overview.getOverviewContent())
 						.set("title", overview.getTitle())
 						.set("timer", overview.getTimer())
-						.set("createdTime", overview.getCreatedTime());
+						.set("createdTime", overview.getCreatedTime())
+						.set("pageView", overview.getPageView());
 		mongoTemplate.updateFirst(query, update, OverviewEntity.class);
 	}
 

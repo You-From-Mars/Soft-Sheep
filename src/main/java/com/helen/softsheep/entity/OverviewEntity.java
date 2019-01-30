@@ -18,6 +18,7 @@ public class OverviewEntity implements Serializable {
 	private String overviewContent;
 	private String createdTime;
 	private String title;
+	private int pageView;
 	private long timer;
 	public String getOverviewUuid() {
 		return overviewUuid;
@@ -66,5 +67,11 @@ public class OverviewEntity implements Serializable {
 	}
 	public void setTitle(String title) {
 		this.title = title;
+	}
+	public int getPageView() {
+		return pageView;
+	}
+	public void setPageView(int pageView) {
+		this.pageView = pageView;
 	}
 }

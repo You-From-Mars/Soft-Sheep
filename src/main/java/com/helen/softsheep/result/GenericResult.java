@@ -7,35 +7,7 @@ package com.helen.softsheep.result;
 public class GenericResult<T> extends AbstractResult {
 
 	private static final long serialVersionUID = 1L;
-
-	public static final GenericResult<Void> SUCCESS = new GenericResult<Void>() {
-
-		private static final long serialVersionUID = -3815215167127265311L;
-
-		@Override
-		public void setSuccess(boolean success) {
-		}
-
-		@Override
-		public void setCode(String code) {
-		}
-
-		@Override
-		public void setMsg(String msg) {
-		}
-
-		@Override
-		public void setData(Void data) {
-		}
-	};
-
-	static {
-
-		SUCCESS.success = true;
-		SUCCESS.code = String.valueOf(CommonCode.CODE_SUCCESS.code());
-		SUCCESS.msg = CommonCode.CODE_SUCCESS.msg();
-	}
-
+	
 	private T data;
 
 	public GenericResult() {

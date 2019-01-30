@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.helen.softsheep.dao.CommentDao;
 import com.helen.softsheep.entity.CommentEntity;
+import com.helen.softsheep.result.CommonCode;
 import com.helen.softsheep.result.GenericResult;
 
 @RestController
@@ -37,9 +38,13 @@ public class CommentController {
 	@ResponseBody
 	public GenericResult<String> index(HttpServletRequest req, @RequestBody Map<String, Object> params) throws Exception {
 		HttpSession session = req.getSession();
+		String userName = (String) session.getAttribute("userName");
+		System.out.println("userName----" + userName);
+		if (userName == null) {
+			return GenericResult.fail(CommonCode.CODE_NO_LOGIN);
+		}
 		String commentUuid = UUID.randomUUID().toString().replaceAll("-", "");
 		String articleUuid = (String) params.get("articleId");
-		String userName = (String) session.getAttribute("userName");
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String createdTime = sdf.format(new Date());
 		String commentContent = (String) params.get("content");

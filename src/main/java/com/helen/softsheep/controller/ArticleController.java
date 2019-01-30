@@ -23,6 +23,7 @@ import com.helen.softsheep.dao.OverviewDao;
 import com.helen.softsheep.entity.ArticleEntity;
 import com.helen.softsheep.entity.OverviewEntity;
 import com.helen.softsheep.response.OverviewBody;
+import com.helen.softsheep.result.CommonCode;
 import com.helen.softsheep.result.GenericResult;
 
 @RestController
@@ -43,7 +44,7 @@ public class ArticleController {
 		String _userUuid = (String) session.getAttribute("userUuid");
 		String articleId = req.getParameter("articleId");
 		ArticleEntity article = articleDao.findArticleById(articleId);
-		System.out.println("_userUuid=====" + _userUuid);
+		OverviewEntity overview = overviewDao.findOverviewByArticleId(articleId);
 		if (_userUuid != null && _userUuid.equals(article.getUserUuid())) {
 			article.setIsSelf(1);
 		} else {
@@ -53,7 +54,9 @@ public class ArticleController {
 		int pageView = article.getPageView();
 		pageView++;
 		article.setPageView(pageView);
+		overview.setPageView(pageView);
 		articleDao.saveArticle(article);
+		overviewDao.save(overview);
 		return GenericResult.success(article);
 	}
 
@@ -71,6 +74,9 @@ public class ArticleController {
 			throws Exception {
 		HttpSession session = req.getSession();
 		String userUuid = (String) session.getAttribute("userUuid");
+		if (userUuid == null) {
+			return GenericResult.fail(CommonCode.CODE_NO_LOGIN);
+		}
 		String title = (String) params.get("title");
 		String author = (String) session.getAttribute("userName");
 		String content = (String) params.get("content");
@@ -121,6 +127,7 @@ public class ArticleController {
 		_overview.setTimer(new Date().getTime());
 		_overview.setUserUuid(userUuid);
 		_overview.setArticleUuid(articleUuid);
+		_overview.setPageView(pageView);
 		_overview.setTitle(title);
 		if (articleId.equals("")) {
 			overviewDao.save(_overview);
@@ -128,7 +135,7 @@ public class ArticleController {
 			overviewDao.update(_overview);
 		}
 
-		return GenericResult.success("创建成功");
+		return GenericResult.success(_article.getArticleUuid());
 	}
 
 	@RequestMapping(value = "/softsheep/personal_articles")
