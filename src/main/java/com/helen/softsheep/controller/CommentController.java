@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.helen.softsheep.dao.CommentDao;
+import com.helen.softsheep.dao.OverviewDao;
 import com.helen.softsheep.entity.CommentEntity;
+import com.helen.softsheep.entity.OverviewEntity;
 import com.helen.softsheep.result.CommonCode;
 import com.helen.softsheep.result.GenericResult;
 
@@ -25,7 +27,9 @@ import com.helen.softsheep.result.GenericResult;
 public class CommentController {
 	
 	@Autowired
-	private CommentDao commentDao;	
+	private CommentDao commentDao;
+	@Autowired
+	private OverviewDao overviewDao;
 	
 	@RequestMapping(value = "/softsheep/commentlist")
 	@ResponseBody
@@ -44,6 +48,11 @@ public class CommentController {
 		}
 		String commentUuid = UUID.randomUUID().toString().replaceAll("-", "");
 		String articleUuid = (String) params.get("articleId");
+		OverviewEntity overview = overviewDao.findOverviewByArticleId(articleUuid);
+		int commentCount = overview.getCommentCount();
+		commentCount++;
+		overview.setCommentCount(commentCount);
+		overviewDao.update(overview);
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String createdTime = sdf.format(new Date());
 		String commentContent = (String) params.get("content");

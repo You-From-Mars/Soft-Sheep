@@ -31,6 +31,7 @@ public class OverviewDaoImpl implements OverviewDao  {
 						.set("overviewContent", overview.getOverviewContent())
 						.set("title", overview.getTitle())
 						.set("starCount", overview.getStarCount())
+						.set("commentCount", overview.getCommentCount())
 						.set("timer", overview.getTimer())
 						.set("createdTime", overview.getCreatedTime())
 						.set("pageView", overview.getPageView());

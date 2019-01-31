@@ -55,8 +55,8 @@ public class ArticleController {
 		pageView++;
 		article.setPageView(pageView);
 		overview.setPageView(pageView);
-		articleDao.saveArticle(article);
-		overviewDao.save(overview);
+		articleDao.updateArticle(article);
+		overviewDao.update(overview);
 		return GenericResult.success(article);
 	}
 
@@ -118,6 +118,7 @@ public class ArticleController {
 			overviewUuid = UUID.randomUUID().toString().replaceAll("-", "");
 			_overview = new OverviewEntity();
 			_overview.setStarCount(0);
+			_overview.setCommentCount(0);
 		} else {
 			articleDao.updateArticle(_article);
 			_overview = overviewDao.findOverviewByArticleId(articleUuid);
