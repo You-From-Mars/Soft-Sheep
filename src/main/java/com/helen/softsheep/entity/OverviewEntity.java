@@ -21,6 +21,7 @@ public class OverviewEntity implements Serializable {
 	private int pageView;
 	private int starCount;
 	private int commentCount;
+	private String img;
 	private long timer;
 	public String getOverviewUuid() {
 		return overviewUuid;
@@ -87,5 +88,11 @@ public class OverviewEntity implements Serializable {
 	}
 	public void setCommentCount(int commentCount) {
 		this.commentCount = commentCount;
+	}
+	public String getImg() {
+		return img;
+	}
+	public void setImg(String img) {
+		this.img = img;
 	}
 }

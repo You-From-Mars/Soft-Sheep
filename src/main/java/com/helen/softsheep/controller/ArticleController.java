@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -81,15 +83,9 @@ public class ArticleController {
 		String author = (String) session.getAttribute("userName");
 		String content = (String) params.get("content");
 		String articleId = (String) params.get("id");
-		String REGEX = "#*=*\\**`*\\+*>*-*\\[*\\]*\\s*\\(*\\)*(toc)*@*";
-		String REPLACE = "";
-		String overviewContent = "";
-		if (content.length() > 50) {
-			overviewContent = content.replaceAll(REGEX, REPLACE).substring(0, 50) + "...";
-		} else {
-			overviewContent = content.replaceAll(REGEX, REPLACE);
-		}
-		logger.info("overviewContent" + overviewContent);
+		
+		
+		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String createdTime = sdf.format(new Date());
 
@@ -102,7 +98,7 @@ public class ArticleController {
 		if (articleId.equals("")) {
 			articleUuid = UUID.randomUUID().toString().replaceAll("-", "");
 			_article = new ArticleEntity();
-			_article.setStarCount(0);
+//			articleDao.setStarCount(0);
 		} else {
 			_article = articleDao.findArticleById(articleId);
 			articleUuid = articleId;
@@ -113,6 +109,29 @@ public class ArticleController {
 		_article.setPageView(pageView);
 		_article.setTitle(title);
 		_article.setUserUuid(userUuid);
+		
+		// 获取文章中图第一张图片作为overview
+		String imgReg = "\\!\\[\\]\\((.+)\\)";
+		Pattern r = Pattern.compile(imgReg);
+		Matcher m = r.matcher(content);
+		String img = "";
+		if (m.find()) {
+			img = m.group(1);
+//			overview
+			System.out.println("img------" + img);
+		}
+		// 生成overview的content
+		String REGEX = "#*=*\\**`*\\+*>*-*\\[*\\]*\\s*\\(*\\)*(toc)*@*";
+		String REPLACE = "";
+		String overviewContent = "";
+		if (content.length() > 50) {
+			overviewContent = content.replaceAll(REGEX, REPLACE).substring(0, 50) + "...";
+		} else {
+			overviewContent = content.replaceAll(REGEX, REPLACE);
+		}
+		logger.info("overviewContent" + overviewContent);
+			
+		
 		if (articleId.equals("")) {
 			articleDao.saveArticle(_article);
 			overviewUuid = UUID.randomUUID().toString().replaceAll("-", "");
@@ -122,6 +141,9 @@ public class ArticleController {
 		} else {
 			articleDao.updateArticle(_article);
 			_overview = overviewDao.findOverviewByArticleId(articleUuid);
+		}
+		if (img != "") {
+			_overview.setImg(img);
 		}
 		_overview.setAuthor(author);
 		_overview.setCreatedTime(createdTime);
