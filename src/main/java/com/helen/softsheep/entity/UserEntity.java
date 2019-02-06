@@ -1,6 +1,8 @@
 package com.helen.softsheep.entity;
 
 import java.io.Serializable;
+import java.util.List;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -15,6 +17,8 @@ public class UserEntity implements Serializable {
 	private String username;
 	private String sex;  // 0: 男生，1: 女生
 	private String password;
+	private List follower;
+	private List following;
 	public String getUserUuid() {
 		return userUuid;
 	}
@@ -44,5 +48,17 @@ public class UserEntity implements Serializable {
 	}
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	public List getFollower() {
+		return follower;
+	}
+	public void setFollower(List follower) {
+		this.follower = follower;
+	}
+	public List getFollowing() {
+		return following;
+	}
+	public void setFollowing(List following) {
+		this.following = following;
 	}
 }
