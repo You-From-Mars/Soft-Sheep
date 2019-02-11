@@ -1,9 +1,12 @@
 package com.helen.softsheep.controller;
 
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,20 +23,16 @@ public class FollowController {
 	private UserDao userDao;
 	@RequestMapping(value = "/softsheep/follow")
 	@ResponseBody
-	public GenericResult<String> follow(HttpServletRequest req) throws Exception {
+	public GenericResult<String> follow(HttpServletRequest req, @RequestBody Map<String, Object> params) throws Exception {
 		HttpSession session = req.getSession();
-		String userUuid = (String) session.getAttribute("userUuid");
-		if (userUuid == null) {
+		String id = (String) session.getAttribute("userUuid");
+		if (id == null) {
 			return GenericResult.fail(CommonCode.CODE_NO_LOGIN);
 		}
-		UserEntity user = userDao.findUserById(userUuid);
-		String followUserId = req.getParameter("id");
-		String followName = req.getParameter("name");
+		UserEntity user = userDao.findUserById(id);
+		String followId = (String) params.get("id");
+		String followingName = (String) params.get("followingName");
 		FollowType following = new FollowType();
-		following.setId(followUserId);
-		following.setName(followName);
-		user.setFollower(following);
-		userDao.updateUser(user);
 		return GenericResult.success("success");
 	}
 }
