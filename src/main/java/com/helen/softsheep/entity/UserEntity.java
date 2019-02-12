@@ -7,7 +7,6 @@ import java.util.List;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import com.helen.softsheep.response.FollowType;
 
 @Document(collection = "users")
 public class UserEntity implements Serializable {
@@ -20,8 +19,6 @@ public class UserEntity implements Serializable {
 	private String username;
 	private String sex;  // 0: 男生，1: 女生
 	private String password;
-	private List<FollowType> follower = new ArrayList<FollowType>();
-	private List<FollowType> following = new ArrayList<FollowType>();
 	public String getUserUuid() {
 		return userUuid;
 	}
@@ -51,19 +48,5 @@ public class UserEntity implements Serializable {
 	}
 	public void setPassword(String password) {
 		this.password = password;
-	}
-	public List getFollower() {
-		return follower;
-	}
-	public void setFollower(FollowType follower) {
-		this.follower.add(follower);
-		System.out.println("this.follower" + this.follower);
-	}
-	public List getFollowing() {
-		return following;
-	}
-	public void setFollowing(FollowType following) {
-		this.following.add(following);
-		System.out.println("this.following" + this.following);
 	}
 }

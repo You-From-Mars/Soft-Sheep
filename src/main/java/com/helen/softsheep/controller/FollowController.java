@@ -11,9 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.helen.softsheep.dao.FollowDao;
 import com.helen.softsheep.dao.UserDao;
+import com.helen.softsheep.entity.FollowEntity;
 import com.helen.softsheep.entity.UserEntity;
-import com.helen.softsheep.response.FollowType;
 import com.helen.softsheep.result.CommonCode;
 import com.helen.softsheep.result.GenericResult;
 
@@ -21,6 +22,8 @@ import com.helen.softsheep.result.GenericResult;
 public class FollowController {
 	@Autowired
 	private UserDao userDao;
+	@Autowired
+	private FollowDao followDao;
 	@RequestMapping(value = "/softsheep/follow")
 	@ResponseBody
 	public GenericResult<String> follow(HttpServletRequest req, @RequestBody Map<String, Object> params) throws Exception {
@@ -32,7 +35,11 @@ public class FollowController {
 		UserEntity user = userDao.findUserById(id);
 		String followId = (String) params.get("id");
 		String followingName = (String) params.get("followingName");
-		FollowType following = new FollowType();
+		FollowEntity follow = new FollowEntity();
+		follow.setFollowId(followId);
+		follow.setId(id);
+		follow.setFollowingName(followingName);
+		followDao.saveFollow(follow);
 		return GenericResult.success("success");
 	}
 }
